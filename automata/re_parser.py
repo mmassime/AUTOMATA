@@ -68,10 +68,9 @@ class REParser(AbstractREParser):
         self,
         automaton: FiniteAutomaton,
     ) -> FiniteAutomaton:
-        states = automaton.states
-        transitions = automaton.transitions
-        symbols = automaton.symbols
-        symbols.append(None)
+        states = list(automaton.states)
+        transitions = list(automaton.transitions)
+        symbols = list(automaton.symbols)
 
         s1 = State(name="q"+ str(self.state_counter), is_final=False)
         self.state_counter += 1
