@@ -13,8 +13,10 @@ class REParser(AbstractREParser):
 
         states = []        
 
-        i_state = State(name="inicial",is_final=False)
-        f_state = State(name="final",is_final=True)
+        i_state = State(name="q"+str(self.state_counter),is_final=False)
+        self.state_counter += 1
+        f_state = State(name="f"+str(self.state_counter),is_final=True)
+        self.state_counter += 1
 
         states.append(i_state)
         states.append(f_state)
@@ -28,7 +30,8 @@ class REParser(AbstractREParser):
     ) -> FiniteAutomaton:       
         states = []
 
-        f_state = State(name="final",is_final=True)
+        f_state = State(name="f"+ str(self.state_counter),is_final=True)
+        self.state_counter += 1
 
         states.append(f_state)
 
@@ -47,11 +50,12 @@ class REParser(AbstractREParser):
 
         symbols.append(symbol)
 
-        i_state = State(name="q0", is_final=False)
+        i_state = State(name="q"+ str(self.state_counter), is_final=False)
         states.append(i_state)
-
-        f_state = State(name="q1", is_final=True)
+        self.state_counter += 1
+        f_state = State(name="q"+ str(self.state_counter), is_final=True)
         states.append(f_state)
+        self.state_counter += 1
 
         t = Transition(initial_state=i_state, symbol=symbol, final_state=f_state)
         transitions.append(t)
@@ -69,8 +73,10 @@ class REParser(AbstractREParser):
         symbols = automaton.symbols
         symbols.append(None)
 
-        s1 = State(name="q0", is_final=False)
-        s2 = State(name="q1", is_final=False)
+        s1 = State(name="q"+ str(self.state_counter), is_final=False)
+        self.state_counter += 1
+        s2 = State(name="q"+str(self.state_counter), is_final=False)
+        self.state_counter += 1
         states.append(s1)
         states.append(s2)
 
@@ -93,7 +99,6 @@ class REParser(AbstractREParser):
         automaton1: FiniteAutomaton,
         automaton2: FiniteAutomaton,
     ) -> FiniteAutomaton:
-        self.state_counter=0
         states = list(automaton1.states + automaton2.states)
         transitions = list(automaton1.transitions + automaton2.transitions)
         symbols = automaton1.symbols + automaton2.symbols
@@ -126,7 +131,6 @@ class REParser(AbstractREParser):
         automaton1: FiniteAutomaton,
         automaton2: FiniteAutomaton,
     ) -> FiniteAutomaton:
-        self.state_counter=0
         symbols = automaton1.symbols + automaton2.symbols
         transitions = list(automaton1.transitions + automaton2.transitions)
         final = State(name="final", is_final=True)
