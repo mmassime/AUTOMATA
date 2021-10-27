@@ -1,8 +1,8 @@
 """Test evaluation of regex parser."""
 import unittest
 
-from automaton_evaluator import FiniteAutomatonEvaluator
-from re_parser import REParser
+from automata.automaton_evaluator import FiniteAutomatonEvaluator
+from automata.re_parser import REParser
 
 
 class TestREParser(unittest.TestCase):
@@ -25,7 +25,6 @@ class TestREParser(unittest.TestCase):
     def test_fixed(self) -> None:
         """Test fixed regex."""
         evaluator = self._create_evaluator("H.e.l.l.o")
-
         self._check_accept(evaluator, "Hello", should_accept=True)
         self._check_accept(evaluator, "Helloo", should_accept=False)
         self._check_accept(evaluator, "Hell", should_accept=False)
@@ -48,6 +47,7 @@ class TestREParser(unittest.TestCase):
         self._check_accept(evaluator, "aba", should_accept=False)
         self._check_accept(evaluator, "bab", should_accept=False)
 
+
     def test_or(self) -> None:
         """Test Kleene star."""
         evaluator = self._create_evaluator("(a+b)*")
@@ -63,6 +63,7 @@ class TestREParser(unittest.TestCase):
         self._check_accept(evaluator, "abb", should_accept=True)
         self._check_accept(evaluator, "aba", should_accept=True)
         self._check_accept(evaluator, "bab", should_accept=True)
+        
 
     def test_number(self) -> None:
         """Test number expression."""

@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from automaton import FiniteAutomaton
+from automata.automaton import FiniteAutomaton
 
 
 def _re_to_rpn(re_string: str) -> str:

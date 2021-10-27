@@ -1,8 +1,8 @@
 """Evaluation of automata."""
 from typing import Set
 
-from automaton import FiniteAutomaton, State
-from interfaces import AbstractFiniteAutomatonEvaluator
+from automata.automaton import FiniteAutomaton, State
+from automata.interfaces import AbstractFiniteAutomatonEvaluator
 
 
 class FiniteAutomatonEvaluator(
@@ -33,18 +33,21 @@ class FiniteAutomatonEvaluator(
                 for transition in self.automaton.transitions:
                     if transition.symbol == symbol and transition.initial_state == state:
                         new.append(transition.final_state)
-            
-            self._complete_lambdas(set(new))
+            set_to_complete = set(new)
+            self._complete_lambdas(set_to_complete)
 
-            self.current_states = set(new)
+            self.current_states = set_to_complete
+
 
     def _complete_lambdas(self, set_to_complete: Set[State]) -> None:
         """Tdos los estados alacanzables mediante transiciones lambda"""
+        check = False
         for transition in self.automaton.transitions: 
-            if transition.symbol == None:
-                """if transition.final_state in set_to_complete:
-                    continue"""
+            if transition.symbol == None and transition.initial_state in set_to_complete and not transition.final_state in set_to_complete :
                 set_to_complete.add(transition.final_state)
+                check = True
+        if check:
+            self._complete_lambdas(set_to_complete)
                 
 
     def is_accepting(self) -> bool:

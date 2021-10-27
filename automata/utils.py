@@ -5,7 +5,7 @@ from typing import DefaultDict, Dict, Mapping, Optional, Set
 
 from typing_extensions import Final
 
-import automaton as aut
+import automata.automaton as aut
 
 
 class FormatParseError(Exception):

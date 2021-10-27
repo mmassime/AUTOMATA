@@ -3,9 +3,9 @@ import unittest
 from abc import ABC, abstractmethod
 from typing import Optional, Type
 
-from automaton import FiniteAutomaton
-from automaton_evaluator import FiniteAutomatonEvaluator
-from utils import AutomataFormat
+from automata.automaton import FiniteAutomaton
+from automata.automaton_evaluator import FiniteAutomatonEvaluator
+from automata.utils import AutomataFormat
 
 
 class TestEvaluatorBase(ABC, unittest.TestCase):

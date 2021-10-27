@@ -1,7 +1,7 @@
 """Conversion from regex to automata."""
-from automaton import (FiniteAutomaton, State, Transition)
-from re_parser_interfaces import AbstractREParser
-from automaton import State
+from automata.automaton import (FiniteAutomaton, State, Transition)
+from automata.re_parser_interfaces import AbstractREParser
+from automata.automaton import State
 
 
 class REParser(AbstractREParser):
@@ -108,15 +108,6 @@ class REParser(AbstractREParser):
         initial = State(name="q"+str(self.state_counter),is_final=False)
         states.append(initial)
         self.state_counter+=1
-        for state in states:
-            if state != initial:
-                for transition in transitions:
-                    if transition.initial_state == state:
-                        transition.initial_state.name = "q"+str(self.state_counter)
-                    if transition.final_state == state:
-                        transition.final_state.name = "q"+str(self.state_counter)
-                state.name = "q"+str(self.state_counter)
-                self.state_counter +=1
         transitions.append(Transition(initial_state = initial, symbol=None, final_state=automaton1.initial_state))
         transitions.append(Transition(initial_state = initial, symbol=None, final_state=automaton2.initial_state))
         final = State(name="f"+str(self.state_counter), is_final=True)
@@ -138,7 +129,8 @@ class REParser(AbstractREParser):
         symbols = list(dict.fromkeys(symbols))
 
         transitions = list(automaton1.transitions + automaton2.transitions)
-        final = State(name="final", is_final=True)
+        final = State(name="f"+str(self.state_counter), is_final=True)
+        self.state_counter += 1
         for state in automaton1.states:
             if state.is_final:
                 state.is_final = False
@@ -152,16 +144,5 @@ class REParser(AbstractREParser):
         initial = State(name="q"+str(self.state_counter),is_final=False)
         self.state_counter+=1
         states.append(initial)
-        for state in states:
-            if state != initial:
-                for transition in transitions:
-                    if transition.initial_state == state:
-                        transition.initial_state.name = "q"+str(self.state_counter)
-                    if transition.final_state == state:
-                        transition.final_state.name = "q"+str(self.state_counter)
-                state.name = "q"+str(self.state_counter)
-                self.state_counter +=1
-        final.name="f"+str(self.state_counter)
-        self.state_counter += 1
         transitions.append(Transition(initial_state = initial, symbol=None, final_state=automaton1.initial_state))
         return FiniteAutomaton(initial_state=initial,states=states,symbols=symbols,transitions=transitions)
