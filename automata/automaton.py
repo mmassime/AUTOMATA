@@ -60,9 +60,9 @@ class FiniteAutomaton(
        accesibles.append[self.initial_state]
        counter += 1
 
-       for state in self.states
-        for transition in self.transitions
-            if state == transition.initial_state and in accesibles:
+       for state in self.states:
+        for transition in self.transitions:
+            if state == transition.initial_state and state in accesibles:
                 if transition.final_state not in accesibles:
                     accesibles.append(transition.final_state)
                     counter += 1
