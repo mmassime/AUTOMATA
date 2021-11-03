@@ -53,4 +53,19 @@ class FiniteAutomaton(
     def to_minimized(
         self,
     ) -> "FiniteAutomaton":
-        raise NotImplementedError("This method must be implemented.")
+
+       accesibles = []
+       counter = 0
+    
+       accesibles.append[self.initial_state]
+       counter += 1
+
+       for state in self.states
+        for transition in self.transitions
+            if state == transition.initial_state and in accesibles:
+                if transition.final_state not in accesibles:
+                    accesibles.append(transition.final_state)
+                    counter += 1
+        
+        self.state_counter = counter
+        self.states = accesibles
