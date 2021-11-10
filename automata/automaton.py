@@ -85,14 +85,12 @@ class FiniteAutomaton(
                 i += 1
         new_states = []
         new_transitions = []
-        print(group_number)
         for s in range(j+1):
             if s == 0:
                 new_states.append(State(name=str(s),is_final=True))
             else:
                 new_states.append(State(name=str(s),is_final=False))
         transtion_matrix = self.compute_tranistions(set_to_complete, group_number,j)
-        print(transtion_matrix)
         for state in new_states:
             for symbol in self.symbols:
                 new_transitions.append(Transition(state,symbol,new_states[transtion_matrix[new_states.index(state)][self.symbols.index(symbol)]]))
@@ -122,18 +120,27 @@ class FiniteAutomaton(
                 if t.initial_state == s2 and t.symbol == self.symbols[i]:
                     l2[i] = groups[set_status.index(t.final_state)]  
         return l1 == l2
-                                
+    def EliminateInaccessible(self):
+        visited = [False]*(len(self.states))
+        queue = []
+        newState  =[]
+        queue.append(self.initial_state)
+        visited[self.states.index(self.initial_state)] = True
+        while queue:
+            s = queue.pop(0)
+            newState.append(s)
+            for t in self.transitions:
+                if t.initial_state == s:
+                    if visited[self.states.index(t.final_state)] == False:
+                        queue.append(t.final_state)
+                        visited[self.states.index(t.final_state)] = True
+        
+        self.states = newState       
+                                          
     def to_minimized(
         self,
     ) -> "FiniteAutomaton":
+        self.EliminateInaccessible()
         self.minimize(list(self.states))
-
-    def _complete_lambdas(self, set_to_complete) -> None:
-        """Tdos los estados alacanzables mediante transiciones lambda"""
-        check = False
-        for transition in self.transitions: 
-            if transition.symbol == None and transition.initial_state in set_to_complete and not transition.final_state in set_to_complete :
-                set_to_complete.add(transition.final_state)
-                check = True
-        if check:
-            self._complete_lambdas(set_to_complete)
+        
+        

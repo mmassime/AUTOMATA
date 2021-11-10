@@ -62,36 +62,5 @@ class TestTransform(ABC, unittest.TestCase):
 
 
 if __name__ == '__main__':
-    #unittest.main()
-    automaton_str = """
-        Automaton:
-            Symbols: 01
-
-            A
-            B
-            C final
-            E
-            F
-            G
-            H
-
-            --> A
-            A -0-> B
-            A -1-> F
-            B -0-> G
-            B -1-> C
-            C -0-> A
-            C -1-> C
-            E -0-> H
-            E -1-> F
-            F -0-> C
-            F -1-> G
-            G -0-> G
-            G -1-> E
-            H -0-> G
-            H -1-> C
-        """
-
-    automaton = AutomataFormat.read(automaton_str)
-    automaton.to_minimized()
-    print(automaton)
+    unittest.main()
+    
